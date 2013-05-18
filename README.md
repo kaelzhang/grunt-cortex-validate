@@ -1,6 +1,6 @@
 # grunt-cortex-validator
 
-> Cortex validator
+> Validate important properties of package.json
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -37,53 +37,38 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.pkg
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
+Default value: `'package.json'`
 
-#### options.punctuation
+The file path of the package.json to be checked
+
+#### options.npmServer
 Type: `String`
-Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
+Default value: `'http://registery.npmjs.org'`
+
+Npm server location. It will be usefull if you use your self-built npm server.
+
+#### options.exportFile
+Type: `String`
+
+Default value: `undefined`
+
+"Cortex_validator" will save the current exact version of each dependency to `options.exportFile`
+
 
 ### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  cortex_validator: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
 ```js
 grunt.initConfig({
   cortex_validator: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+      pkg: 'package.json',
+      npmServer: 'http://registery.yourdomain.com',
+      exportFile: 'exactDependencies.json'
+    }
   },
 })
 ```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
