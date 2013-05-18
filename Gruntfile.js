@@ -12,37 +12,37 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-        jshint: {
-            all: [
-                'Gruntfile.js',
-                'tasks/*.js',
-                '<%= nodeunit.tests %>',
-            ],
-            options: require('./.jshintrc.js')
-        },
+        // jshint: {
+        //     all: [
+        //         'Gruntfile.js',
+        //         'tasks/*.js',
+        //         '<%= nodeunit.tests %>',
+        //     ],
+        //     options: require('./.jshintrc.js')
+        // },
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp'],
+            tests: ['test/**/build'],
         },
 
         // Configuration to be run (and then tested).
         cortex_validator: {
             normal: {
                 options: {
-                    pkg: grunt.file.readJSON('test/normal/fixtures/package.json'),
-                    registeryURL: 'http://registery.npm.dp',
+                    pkg: 'test/normal/fixtures/package.json',
+                    // npmServer: 'http://registery.npm.dp',
+                    exportFile: 'test/normal/build/exactDependencies.json',
                 },
             }
         },
-
     });
 
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');
 
     // These plugins provide necessary tasks.
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    // grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this

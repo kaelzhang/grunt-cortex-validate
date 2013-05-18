@@ -40,6 +40,7 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "semver": "~1.1.4"
+    "semver": "~1.1.4",
+    "async": "~0.2.8"
   }
 }
