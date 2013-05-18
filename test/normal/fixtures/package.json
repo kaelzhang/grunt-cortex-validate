@@ -1,0 +1,9 @@
+{
+  "name": "async",
+  "description": "Cortex validator",
+  "version": "0.2.9",
+  "cortexDependencies": {
+    "semver": "~1.1.4",
+    "lodash": "~1.2.0"
+  }
+}
