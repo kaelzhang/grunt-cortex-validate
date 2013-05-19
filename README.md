@@ -1,4 +1,4 @@
-# grunt-cortex-validator
+# grunt-cortex-validate
 
 > Validate important properties of package.json
 
@@ -8,23 +8,23 @@ This plugin requires Grunt `~0.4.1`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-cortex-validator --save-dev
+npm install grunt-cortex-validate --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-cortex-validator');
+grunt.loadNpmTasks('grunt-cortex-validate');
 ```
 
-## The "cortex_validator" task
+## The "cortex_validate" task
 
 ### Overview
-In your project's Gruntfile, add a section named `cortex_validator` to the data object passed into `grunt.initConfig()`.
+In your project's Gruntfile, add a section named `cortex_validate` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
-  cortex_validator: {
+  cortex_validate: {
     options: {
       // Task-specific options go here.
     },
@@ -56,14 +56,14 @@ Type: `String`
 
 Default value: `undefined`
 
-"Cortex_validator" will save the current exact version of each dependency to `options.exportFile`
+"Cortex_validate" will save the current exact version of each dependency to `options.exportFile`
 
 
 ### Usage Examples
 
 ```js
 grunt.initConfig({
-  cortex_validator: {
+  cortex_validate: {
     options: {
       pkg: 'package.json',
       npmServer: 'http://registery.yourdomain.com',

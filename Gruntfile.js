@@ -27,7 +27,7 @@ module.exports = function(grunt) {
         },
 
         // Configuration to be run (and then tested).
-        cortex_validator: {
+        cortex_validate: {
             normal: {
                 options: {
                     pkg: 'test/normal/fixtures/package.json',
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'cortex_validator']);
+    grunt.registerTask('test', ['clean', 'cortex_validate']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', [ /* 'jshint', */ 'test']);

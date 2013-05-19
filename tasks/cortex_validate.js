@@ -29,7 +29,7 @@ module.exports = function(grunt) {
 
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
-    grunt.registerMultiTask('cortex_validator', 'Validate module version and normalize semver', function() {
+    grunt.registerMultiTask('cortex_validate', 'Validate module version and normalize semver', function() {
 
         var task_done = this.async();
 
