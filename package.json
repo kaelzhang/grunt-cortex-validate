@@ -1,7 +1,7 @@
 {
   "name": "grunt-cortex-validate",
   "description": "Cortex validate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/kaelzhang/grunt-cortex-validate",
   "author": {
     "name": "Kael",
@@ -41,6 +41,7 @@
   ],
   "dependencies": {
     "semver": "~1.1.4",
-    "async": "~0.2.8"
+    "async": "~0.2.8",
+    "npmw": "~0.0.1"
   }
 }

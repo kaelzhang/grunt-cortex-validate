@@ -44,7 +44,7 @@ Default value: `'package.json'`
 
 The file path of the package.json to be checked
 
-#### options.npmServer
+#### options.registery
 Type: `String`
 
 Default value: `'http://registery.npmjs.org'`
@@ -66,7 +66,7 @@ grunt.initConfig({
   cortex_validate: {
     options: {
       pkg: 'package.json',
-      npmServer: 'http://registery.yourdomain.com',
+      registery: 'http://registery.yourdomain.com',
       exportFile: 'exactDependencies.json'
     }
   },

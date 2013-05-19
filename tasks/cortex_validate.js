@@ -11,10 +11,8 @@
 'use strict';
 
 var async       = require('async');
-
-var Validator   = require('../lib/validator');
-var semver      = require('../lib/semver-extra');
-var npmw        = require('../lib/npmw');
+var semver      = require('semver');
+var npmw        = require('npmw');
 var lang        = require('../lib/lang');
 
 
@@ -41,18 +39,20 @@ module.exports = function(grunt) {
         var options = this.options({
         });
 
+        var npmw_options = {};
+
         // npmw must be configured before use
-        if(options.npmServer){
-            npmw.SETTINGS.REGISTRY_URL = options.npmServer;
+        if(options.registery){
+            npmw_options.registery = options.registery;
         }
 
-        var validator = new Validator(npmw);
+        var npm = npmw(npmw_options);
         var pkg = grunt.file.readJSON(options.pkg || 'package.json');
 
         var name = pkg.name;
         var version = pkg.version;
 
-        if(!semver.isExactVersion(version)){
+        if(!semver.valid(version)){
             fail(ERROR_MESSAGE.INVALID_VERSION, {
                 version: version
             });
@@ -64,16 +64,14 @@ module.exports = function(grunt) {
         series.push(function(done) {
 
             // check if the current module version is available
-            validator.exists(name, version, function(error, data) {
+            npm.exists(name, version, function(error, data) {
                 done();
 
                 if(error){
-                    if(error.code !== 'E404'){
-                        grunt.log.warn('NPM server error, skip checking name and version: ' + error);
-                    }
+                    grunt.log.warn('NPM server error, skip checking name and version: ' + error);
 
                 }else{
-                    if(!lang.isEmptyObject(data)){
+                    if(data.exists){
                         fail(ERROR_MESSAGE.MODULE_VERSION_EXISTS, {
                             name: name,
                             version: version
@@ -90,32 +88,27 @@ module.exports = function(grunt) {
 
         lang.each(cortex_dependencies, function(dep, dep_version) {
             series.push(function(done) {
-                validator.exists(dep, cortex_dependencies[dep], function(error, data) { // console.log('deps', error, data);
+                npm.exists(dep, cortex_dependencies[dep], function(error, data) { // console.log('deps', error, data);
                     done();
 
-                    var latest;
-
-                    if(error && error.code !== 'E404'){
+                    if(error){
                         return grunt.log.warn( lang.template('NPM server error, skip checking dependency "{name}@{version}"', {
                             name: dep,
                             version: dep_version
                         }) );
 
-                    }else if(data){
-                        latest = Object.keys(data).sort(semver.rcompare)[0];
-
-                        if(latest){
-                            exact_dependencies[dep] = latest;
-                        }
                     }
 
-                    if(!latest){
+                    if(data.exists){
+                        exact_dependencies[dep] = data.latest;
+                    
+                    }else{
                         fail(ERROR_MESSAGE.MODULE_DEPS_UNEXISTED, {
                             name: dep,
                             version: dep_version 
                         });
-                    
                     }
+
                 });
             });
         });
