@@ -19,7 +19,8 @@ var lang        = require('../lib/lang');
 var ERROR_MESSAGE = {
     MODULE_VERSION_EXISTS   : 'Module "{name}" with version "{version}" all ready exists, please update `version` in package.json',
     INVALID_VERSION         : 'Invalid module version "{version}", you should use an exact value',
-    MODULE_DEPS_UNEXISTED   : 'Dependency "{name}@{version}" is not existed'
+    MODULE_DEPS_UNEXISTED   : 'Dependency "{name}@{version}" is not existed',
+    PACKAGE_NOT_SPECIFIED   : 'Option `pkg` must be specified'
 };
 
 
@@ -37,17 +38,26 @@ module.exports = function(grunt) {
 
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
+            exportFile: 'package.json'
         });
+
+        console.log(options);
 
         var npmw_options = {};
 
         // npmw must be configured before use
-        if(options.registery){
-            npmw_options.registery = options.registery;
+        if(options.registry){
+            npmw_options.registry = options.registry;
         }
 
+        // create npm wrapper
         var npm = npmw(npmw_options);
-        var pkg = grunt.file.readJSON(options.pkg || 'package.json');
+
+        var pkg = options.pkg;
+
+        if(!pkg){
+            fail(ERROR_MESSAGE.PACKAGE_NOT_SPECIFIED);
+        }
 
         var name = pkg.name;
         var version = pkg.version;
@@ -115,9 +125,18 @@ module.exports = function(grunt) {
 
         async.parallel(series, function() {
             var export_file = options.exportFile;
+            var data = {};
 
             if(export_file){
-                grunt.file.write(export_file, JSON.stringify(exact_dependencies, null, 4));
+
+                // not override existed data of "package.json"
+                if(grunt.file.exists()){
+                    data = grunt.file.readJSON(export_file);
+                }
+
+                data.cortexExactDependencies = exact_dependencies;
+
+                grunt.file.write(export_file, JSON.stringify(data, null, 4));
             }
 
             task_done();
