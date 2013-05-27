@@ -41,8 +41,6 @@ module.exports = function(grunt) {
             exportFile: 'package.json'
         });
 
-        console.log(options);
-
         var npmw_options = {};
 
         // npmw must be configured before use
@@ -134,7 +132,7 @@ module.exports = function(grunt) {
                     data = grunt.file.readJSON(export_file);
                 }
 
-                data.cortexExactDependencies = exact_dependencies;
+                data.cortexExactDependencies = lang.mix(data.cortexExactDependencies || {}, exact_dependencies);
 
                 grunt.file.write(export_file, JSON.stringify(data, null, 4));
             }
