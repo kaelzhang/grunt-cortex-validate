@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             normal: {
                 options: {
                     pkg: 'test/normal/fixtures/package.json',
-                    // npmServer: 'http://registery.npm.dp',
+                    // npmServer: 'http://registry.npm.dp',
                     exportFile: 'test/normal/build/exactDependencies.json',
                 },
             }
